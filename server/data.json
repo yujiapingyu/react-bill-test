@@ -3,21 +3,21 @@
       {
         "type": "pay",
         "money": -99,
-        "date": "2022-10-24 10:36:42",
+        "date": "2024-01-02 10:36:42",
         "useFor": "drinks",
         "id": 1
       },
       {
         "type": "pay",
         "money": -88,
-        "date": "2022-10-24 10:37:51",
+        "date": "2024-01-01 10:37:51",
         "useFor": "longdistance",
         "id": 2
       },
       {
         "type": "income",
         "money": 100,
-        "date": "2022-10-22 00:00:00",
+        "date": "2024-01-04 00:00:00",
         "useFor": "bonus",
         "id": 3
       },
