@@ -1,8 +1,9 @@
 import { NavBar, DatePicker } from "antd-mobile";
 import { useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { dateFormat } from "@/utils/dateFormat";
+import { dateFormat, dateFormatToDay } from "@/utils/dateFormat";
 import { useSelector } from "react-redux";
+import DailyBill from "./components/DailyBill"
 
 import "./index.scss";
 import _ from "lodash";
@@ -42,12 +43,23 @@ const Month = () => {
     setDateSelectorVisible(false);
     const dateStr = dateFormat(date);
     if (!monthGroup[dateStr]) {
+      // 当月没有数据，则设置一个空的数组
       setCurrentMonthList([]);
     } else {
       setCurrentMonthList(monthGroup[dateStr]);
     }
     setCurrentDate(dateStr);
   };
+
+  // 当前月按照日期来分组
+  const dayGroup = useMemo(() => {
+    const groupData = _.groupBy(currentMonthList, (item) => dateFormatToDay(item.date));
+    const keys = Object.keys(groupData).sort((a, b) => new Date(a) - new Date(b));
+    return {
+      keys,
+      groupData
+    }
+  }, [currentMonthList]);
 
   return (
     <div className="monthlyBill">
@@ -92,6 +104,12 @@ const Month = () => {
             max={new Date()}
           />
         </div>
+        {/* 单日账单列表 */}
+        {
+          dayGroup.keys.map(key => {
+            return <DailyBill date={key} billList={dayGroup.groupData[key]} key={key} />
+          })
+        }
       </div>
     </div>
   );
