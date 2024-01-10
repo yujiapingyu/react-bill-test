@@ -1,7 +1,19 @@
-import { NavBar, DatePicker } from 'antd-mobile'
-import './index.scss'
+import { NavBar, DatePicker } from 'antd-mobile';
+import { useState } from 'react';
+import classNames from 'classnames';
+import { dateFormat } from '@/utils/dateFormat';
+
+import './index.scss';
 
 const Month = () => {
+
+  const [dateSelectorVisible, setDateSelectorVisible] = useState(false); // 时间选择器是否显示
+  const [currentDate, setCurrentDate] = useState(dateFormat(new Date())); // 当前时间
+  const onConfirm = (date) => { // 时间选择器确认按钮
+    setDateSelectorVisible(false);
+    setCurrentDate(dateFormat(date));
+  }
+
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
@@ -10,11 +22,11 @@ const Month = () => {
       <div className="content">
         <div className="header">
           {/* 时间切换区域 */}
-          <div className="date">
+          <div className="date" onClick={() => setDateSelectorVisible(true)}>
             <span className="text">
-              2023 | 3月账单
+              {currentDate}月账单
             </span>
-            <span className='arrow expand'></span>
+            <span className={classNames('arrow', {'expand': dateSelectorVisible === true})}></span>
           </div>
           {/* 统计区域 */}
           <div className='twoLineOverview'>
@@ -36,7 +48,10 @@ const Month = () => {
             className="kaDate"
             title="记账日期"
             precision="month"
-            visible={false}
+            visible={dateSelectorVisible}
+            onCancel={() => setDateSelectorVisible(false)}
+            onConfirm={onConfirm}
+            onClose={() => setDateSelectorVisible(false)}
             max={new Date()}
           />
         </div>
