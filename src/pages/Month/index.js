@@ -31,11 +31,21 @@ const Month = () => {
     };
   }, [currentMonthList]);
 
+  useEffect(() => {
+    if (monthGroup[currentDate]) {
+      setCurrentMonthList(monthGroup[currentDate]);
+    }
+  }, [monthGroup, currentDate]);
+
   const onConfirm = (date) => {
     // 时间选择器确认按钮
     setDateSelectorVisible(false);
     const dateStr = dateFormat(date);
-    setCurrentMonthList(monthGroup[dateStr]);
+    if (!monthGroup[dateStr]) {
+      setCurrentMonthList([]);
+    } else {
+      setCurrentMonthList(monthGroup[dateStr]);
+    }
     setCurrentDate(dateStr);
   };
 
