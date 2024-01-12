@@ -25,7 +25,7 @@
         "type": "pay",
         "money": -33,
         "date": "2022-09-24 16:15:41",
-        "useFor": "eat",
+        "useFor": "drinks",
         "id": 4
       },
       {
@@ -90,6 +90,13 @@
         "date": "2023-04-03T11:14:56.036Z",
         "useFor": "food",
         "id": 13
+      },
+      {
+        "type": "pay",
+        "money": -22,
+        "date": "2024-01-01 16:37:51",
+        "useFor": "drinks",
+        "id": 14
       }
     ]
   }
