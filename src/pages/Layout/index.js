@@ -35,7 +35,7 @@ const Layout = () => {
 
   useEffect(() => {
     dispatch(getBillList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="kaLayout">
