@@ -7,16 +7,24 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { addBillList } from '@/store/modules/billStore'
 import { useDispatch } from 'react-redux'
+import { dateFormatReadable } from '@/utils/dateFormat'
 
 const New = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [billType, setBillType] = useState('pay') // pay | income
-  const [money, setMoney] = useState(0) // 金额
+  const handleSwitchBillType = (type) => {
+    setBillType(type)
+    setUseFor('')
+  }
+  const [money, setMoney] = useState(null) // 金额
   const handleMoneyChange = (value) => {
     setMoney(value)
   }
   const [useFor, setUseFor] = useState('') // 用途
+
+  const [dateVisable, setDateVisable] = useState(false) // 日期选择器是否显示
+  const [date, setDate] = useState(new Date()) // 日期
 
   // save form data
   const handleSave = () => {
@@ -28,11 +36,17 @@ const New = () => {
     const data = {
       type: billType,
       money: realMoney,
-      date: new Date(),
+      date: date,
       useFor: useFor,
     }
     console.log('begin to save', data)
     dispatch(addBillList(data))
+  }
+
+  const handleDateChange = (date) => {
+    console.log('date', date)
+    setDateVisable(false)
+    setDate(date)
   }
 
   return (
@@ -48,7 +62,7 @@ const New = () => {
             className={classNames('', {
               selected: billType === 'pay'
             })}
-            onClick={() => setBillType('pay')}
+            onClick={() => handleSwitchBillType('pay')}
           >
             支出
           </Button>
@@ -57,7 +71,7 @@ const New = () => {
               selected: billType === 'income'
             })}
             shape="rounded"
-            onClick={() => setBillType('income')}
+            onClick={() => handleSwitchBillType('income')}
           >
             收入
           </Button>
@@ -67,11 +81,15 @@ const New = () => {
           <div className="kaForm">
             <div className="date">
               <Icon type="calendar" className="icon" />
-              <span className="text">{'今天'}</span>
+              <span className="text" onClick={() => setDateVisable(true)}>{dateFormatReadable(date)}</span>
               <DatePicker
                 className="kaDate"
                 title="记账日期"
                 max={new Date()}
+                visible={dateVisable}
+                onCancel={() => setDateVisable(false)}
+                onConfirm={handleDateChange}
+                onClose={() => setDateVisable(false)}
               />
             </div>
             <div className="kaInput">
@@ -99,7 +117,9 @@ const New = () => {
                     <div
                       className={classNames(
                         'item',
-                        ''
+                        {
+                          selected: useFor === item.type
+                        }
                       )}
                       key={item.type}
                       onClick={() => setUseFor(item.type)}

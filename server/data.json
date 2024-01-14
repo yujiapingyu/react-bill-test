@@ -125,6 +125,27 @@
       "money": 13,
       "date": "2024-01-13T09:19:08.304Z",
       "useFor": "cashgift"
+    },
+    {
+      "id": "decc",
+      "type": "pay",
+      "money": -2,
+      "date": "2024-01-06T16:00:00.000Z",
+      "useFor": "drinks"
+    },
+    {
+      "id": "53a2",
+      "type": "pay",
+      "money": -1455,
+      "date": "2024-01-11T16:00:00.000Z",
+      "useFor": "audio"
+    },
+    {
+      "id": "528a",
+      "type": "pay",
+      "money": 2,
+      "date": "2024-01-13T09:39:58.647Z",
+      "useFor": "audio"
     }
   ]
 }
